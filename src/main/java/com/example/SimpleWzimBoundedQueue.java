@@ -14,7 +14,17 @@ public class SimpleWzimBoundedQueue<E> implements WzimBoundedQueue<E> {
 
     @Override
     public boolean add(E e) {
-        return offer(e);
+        if (e==null) throw new NullPointerException();
+        
+        if (currentIndex+1 > queue.length) throw new IllegalStateException();
+        try {
+            queue[currentIndex] = (E) e;
+        } catch (ClassCastException excpetion) {
+            throw excpetion;
+        }
+        
+        currentIndex++;
+        return true;
     }
 
     @Override
@@ -22,7 +32,11 @@ public class SimpleWzimBoundedQueue<E> implements WzimBoundedQueue<E> {
         if (e==null) throw new NullPointerException();
         
         if (currentIndex+1 > queue.length) return false;
-        queue[currentIndex] = (E) e;
+        try {
+            queue[currentIndex] = (E) e;
+        } catch (ClassCastException excpetion) {
+            throw excpetion;
+        }
         currentIndex++;
         return true;
     }
