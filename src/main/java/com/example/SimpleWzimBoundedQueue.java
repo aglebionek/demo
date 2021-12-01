@@ -1,5 +1,6 @@
 package com.example;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Queue;
@@ -25,19 +26,25 @@ public class SimpleWzimBoundedQueue<E> implements WzimBoundedQueue<E> {
         currentIndex++;
         if (currentIndex > queue.length) return false;
         else queue[currentIndex] = (E) e;
+        return true;
     }
 
     @Override
     public E remove() {
         if(currentIndex == 0) throw new NoSuchElementException();
         E toReturn = (E) queue[0];
-        
+        System.arraycopy(queue, 1, queue, 0, queue.length);
+        return toReturn;
     }
 
     @Override
     public E poll() {
-        // TODO Auto-generated method stub
-        return null;
+        if(currentIndex == 0) return null;
+
+        else{
+            System.arraycopy(queue, 1, queue, 0, queue.length);
+            return (E) queue[0];
+        } 
     }
 
     @Override
@@ -48,8 +55,7 @@ public class SimpleWzimBoundedQueue<E> implements WzimBoundedQueue<E> {
 
     @Override
     public E peek() {
-        // TODO Auto-generated method stub
-        return null;
+        return (E) queue[0];
     }
 
     @Override
