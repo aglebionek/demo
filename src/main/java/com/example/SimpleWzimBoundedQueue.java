@@ -1,9 +1,7 @@
 package com.example;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.NoSuchElementException;
-import java.util.Queue;
 
 public class SimpleWzimBoundedQueue<E> implements WzimBoundedQueue<E> {
     Object[] queue;
@@ -34,17 +32,16 @@ public class SimpleWzimBoundedQueue<E> implements WzimBoundedQueue<E> {
         if(currentIndex == 0) throw new NoSuchElementException();
         E toReturn = (E) queue[0];
         queue = Arrays.copyOfRange(queue, 1, queue.length);
+        currentIndex--;
         return toReturn;
     }
 
     @Override
     public E poll() {
-        if(currentIndex == 0) return null;
-
-        else{
-            queue = Arrays.copyOfRange(queue, 1, queue.length);
-            return (E) queue[0];
-        } 
+        if(currentIndex == 0) return null;   
+        queue = Arrays.copyOfRange(queue, 1, queue.length);
+        currentIndex--;
+        return (E) queue[0];
     }
 
     @Override
@@ -67,6 +64,4 @@ public class SimpleWzimBoundedQueue<E> implements WzimBoundedQueue<E> {
     public int capacity() {
         return queue.length;
     }
-
-
 }
