@@ -49,25 +49,23 @@ public class SimpleWzimBoundedQueue<E> implements WzimBoundedQueue<E> {
 
     @Override
     public E element() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public E peek() {
+        if(currentIndex == 0) throw new NoSuchElementException();
         return (E) queue[0];
     }
 
     @Override
+    public E peek() {
+        return currentIndex == 0 ? null : (E) queue[0];
+    }
+
+    @Override
     public int size() {
-        // TODO Auto-generated method stub
-        return 0;
+        return currentIndex;
     }
 
     @Override
     public int capacity() {
-        // TODO Auto-generated method stub
-        return 0;
+        return queue.length;
     }
 
 
