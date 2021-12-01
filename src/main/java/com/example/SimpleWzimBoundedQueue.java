@@ -16,16 +16,16 @@ public class SimpleWzimBoundedQueue<E> implements WzimBoundedQueue<E> {
 
     @Override
     public boolean add(E e) {
-        // TODO Auto-generated method stub
-        return false;
+        return offer(e);
     }
 
     @Override
     public boolean offer(E e) {
         if (e==null) throw new NullPointerException();
+        
+        if (currentIndex+1 > queue.length) return false;
+        queue[currentIndex] = (E) e;
         currentIndex++;
-        if (currentIndex > queue.length) return false;
-        else queue[currentIndex] = (E) e;
         return true;
     }
 
@@ -33,7 +33,7 @@ public class SimpleWzimBoundedQueue<E> implements WzimBoundedQueue<E> {
     public E remove() {
         if(currentIndex == 0) throw new NoSuchElementException();
         E toReturn = (E) queue[0];
-        System.arraycopy(queue, 1, queue, 0, queue.length);
+        queue = Arrays.copyOfRange(queue, 1, queue.length);
         return toReturn;
     }
 
@@ -42,7 +42,7 @@ public class SimpleWzimBoundedQueue<E> implements WzimBoundedQueue<E> {
         if(currentIndex == 0) return null;
 
         else{
-            System.arraycopy(queue, 1, queue, 0, queue.length);
+            queue = Arrays.copyOfRange(queue, 1, queue.length);
             return (E) queue[0];
         } 
     }
